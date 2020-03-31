@@ -2,7 +2,7 @@
   <div id="app">
     <img src="./assets/logo.png">
     <h2>{{ title }}</h2>
-    <button v-on:click="fetchData">Get Dwarfs</button>
+    <button v-on:click="fetchData">Start App</button>
     <p>{{ data }}</p>
   </div>
 </template>
