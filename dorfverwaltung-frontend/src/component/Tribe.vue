@@ -19,7 +19,7 @@
         } else {
           event.target.parentElement.nextElementSibling.style.opacity = 0.5;
         }
-        this.$emit("showDwarfs")
+        this.$emit("showDwarfs", event)
       }
     }
   }

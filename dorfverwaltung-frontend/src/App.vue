@@ -8,11 +8,15 @@
       v-bind:tribeList="tribes"
       v-on:showDwarfs="getDwarfs"
     />
+    <app-dwarf
+      v-bind:dwarfList="dwarfs"
+    />
   </div>
 </template>
 
 <script>
   import Tribe from './component/Tribe.vue';
+  import Dwarf from './component/Dwarf.vue';
 
   export default {
     name: 'app',
@@ -27,6 +31,7 @@
 
     components: {
       appTribe: Tribe,
+      appDwarf: Dwarf,
     },
 
     methods: {
@@ -47,16 +52,16 @@
           .catch(e => console.log(e));
       },
 
-      getDwarfs() {
-
+      getDwarfs(event) {
+        const tribeName = event.target.parentElement.firstChild.textContent
+        const list = this.dwarfs.filter(dwarf => dwarf.tribe.name === tribeName);
+        console.log(list)
       }
     }
   }
 </script>
 
 <style>
-  @import url('https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css');
-
   #app {
     font-family: 'Avenir', Helvetica, Arial, sans-serif;
     -webkit-font-smoothing: antialiased;
