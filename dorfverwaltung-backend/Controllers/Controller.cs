@@ -11,10 +11,6 @@ namespace dorfverwaltung_backend.Controllers
     [Route("[controller]")]
     public class Controller : ControllerBase
     {
-        static Controller() 
-        {
-            Dwarf.InitDwarfDB();
-        }
 
         [HttpGet]
         public List<Dwarf> Get()
