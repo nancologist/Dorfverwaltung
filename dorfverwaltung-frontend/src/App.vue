@@ -2,8 +2,9 @@
   <div id="app">
     <img src="./assets/logo.png">
     <h2>{{ title }}</h2>
-    <button v-on:click="fetchData">Start App</button>
-    <p>{{ data }}</p>
+    <button v-on:click="fetchData" v-bind:disabled="running">Start App</button>
+    <button v-on:click="log">Log</button>
+    <p v-if="dwarfs.length > 0">{{ dwarfs }}</p>
   </div>
 </template>
 
@@ -13,15 +14,28 @@
     data() {
       return {
         title: 'Dorfverwaltung',
-        data: '',
+        dwarfs: [],
+        tribes: [],
+        running: false,
       }
     },
 
     methods: {
       fetchData() {
-        this.$http.get('https://localhost:5019/Dwarf')
-          .then(resp => resp.text())
-          .then(text => this.data = text);
+        this.running = true;
+        this.$http.get('https://localhost:5019/')
+          .then(resp => resp.json())
+          .then(data => data.forEach(dwarf => {
+            this.dwarfs.push(dwarf);
+            if ( !this.tribes.find(tribe => tribe.name === dwarf['tribe']['name'])) {
+              this.tribes.push(dwarf['tribe'])
+            }
+          }))
+          .catch(e => console.log(e));
+      },
+
+      log() {
+        console.log(this.tribes);
       }
     }
   }
