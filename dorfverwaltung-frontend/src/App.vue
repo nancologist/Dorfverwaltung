@@ -3,12 +3,17 @@
     <img src="./assets/logo.png">
     <h2>{{ title }}</h2>
     <button v-on:click="fetchData" v-bind:disabled="running">Start App</button>
-    <button v-on:click="log">Log</button>
-    <p v-if="dwarfs.length > 0">{{ dwarfs }}</p>
+    <app-tribe
+      v-if="running"
+      v-bind:tribeList="tribes"
+      v-on:showDwarfs="getDwarfs"
+    />
   </div>
 </template>
 
 <script>
+  import Tribe from './component/Tribe.vue';
+
   export default {
     name: 'app',
     data() {
@@ -20,6 +25,10 @@
       }
     },
 
+    components: {
+      appTribe: Tribe,
+    },
+
     methods: {
       fetchData() {
         this.running = true;
@@ -27,21 +36,27 @@
           .then(resp => resp.json())
           .then(data => data.forEach(dwarf => {
             this.dwarfs.push(dwarf);
-            if ( !this.tribes.find(tribe => tribe.name === dwarf['tribe']['name'])) {
-              this.tribes.push(dwarf['tribe'])
+
+            let alreadyStoredTribe = this.tribes.find(tribe => tribe.name === dwarf['tribe']['name'])
+            if (!alreadyStoredTribe) {
+              this.tribes.push({...dwarf['tribe'], tax: +dwarf['powerFactor'] * 2125})
+            } else {
+              alreadyStoredTribe.tax += +dwarf['powerFactor'] * 2125
             }
           }))
           .catch(e => console.log(e));
       },
 
-      log() {
-        console.log(this.tribes);
+      getDwarfs() {
+
       }
     }
   }
 </script>
 
 <style>
+  @import url('https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css');
+
   #app {
     font-family: 'Avenir', Helvetica, Arial, sans-serif;
     -webkit-font-smoothing: antialiased;
@@ -55,7 +70,7 @@
     font-weight: normal;
   }
 
-  button, p {
+  button, p, a {
     font-size: 1.2rem;
   }
 
@@ -69,16 +84,17 @@
     margin: 0 10px;
   }
 
-  a {
-    color: #42b983;
-  }
-
-  button {
-    padding: 15px 30px;
+  button, a {
+    padding: 12px 24px;
     border-radius: 5px;
     background-color: #35495e;
     color: #fff;
     outline: none;
+  }
+
+  a:hover {
+    color: white;
+    text-decoration: none;
   }
 </style>
 
