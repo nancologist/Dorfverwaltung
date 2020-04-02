@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h2>{{ tribeName }}</h2>
+    <h2>Stamm: {{ tribeName }}</h2>
     <div class="card" style="width: 18rem;" v-for="dwarf in dwarfs">
 <!--      <img class="card-img-top" src="" alt="Card image cap">-->
       <div class="card-body">
@@ -14,15 +14,21 @@
             </ul>
           </li>
         </ul>
-        <button>Add Weapon</button>
+        <button>Neue Waffe</button>
       </div>
     </div>
+    <button id="backBtn" @click="onClick">Zurück</button>
   </div>
 </template>
 
 <script>
   export default {
-    props: ['tribeName', 'dwarfs']
+    props: ['tribeName', 'dwarfs'],
+    methods: {
+      onClick() {
+        this.$emit('backBtn')
+      }
+    }
   }
 </script>
 
@@ -41,5 +47,15 @@
   .dwarf-details {
     list-style-type: none;
     text-align: left;
+  }
+
+  button {
+    background-color: #35aa7f;
+  }
+
+  #backBtn {
+    display: block;
+    background-color: chocolate;
+    margin: 30px auto;
   }
 </style>

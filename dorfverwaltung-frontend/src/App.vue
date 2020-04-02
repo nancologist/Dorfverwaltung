@@ -16,6 +16,7 @@
           v-if="displayDwarfs"
           v-bind:tribeName="tribeName"
           v-bind:dwarfs="dwarfsInTribe"
+          v-on:backBtn="goToTribes"
         />
       </transition>
     </div>
@@ -75,6 +76,12 @@
         this.displayDwarfs = true;
         this.tribeName = event.target.parentElement.firstChild.textContent;
         this.dwarfsInTribe = this.dwarfs.filter(dwarf => dwarf.tribe.name === this.tribeName);
+      },
+
+      goToTribes() {
+        this.displayBtn = false;
+        this.displayDwarfs = false;
+        this.displayTribes = true;
       }
     }
   }
