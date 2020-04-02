@@ -1,19 +1,25 @@
 <template>
-  <div id="app">
-    <img src="./assets/logo.png">
-    <h2>{{ title }}</h2>
-    <button v-on:click="fetchData" v-bind:disabled="running">Start App</button>
-
-    <!-- Tribe Cards -->
-    <app-tribe
-      v-if="running"
-      v-bind:tribeList="tribes"
-      v-on:showDwarfs="getDwarfs"
-    />
-    <app-dwarf
-      v-bind:dwarfList="dwarfs"
-    />
-  </div>
+  <transition name="animateit" appear>
+    <div id="app" v-show="true">
+      <h1>{{ title }}</h1>
+      <img ref="vueLogo" src="./assets/logo.png">
+      <div></div>
+      <transition name="animateit" mode="out-in">
+        <!-- Tribe Cards -->
+        <button v-on:click="fetchData" v-if="displayBtn">Show Tribes</button>
+        <app-tribe
+          v-if="displayTribes"
+          v-bind:tribeList="tribes"
+          v-on:showDwarfs="getDwarfs"
+        />
+        <app-dwarf
+          v-if="displayDwarfs"
+          v-bind:tribeName="tribeName"
+          v-bind:dwarfs="dwarfsInTribe"
+        />
+      </transition>
+    </div>
+  </transition>
 </template>
 
 <script>
@@ -27,7 +33,11 @@
         title: 'Dorfverwaltung',
         dwarfs: [],
         tribes: [],
-        running: false,
+        dwarfsInTribe: [],
+        tribeName: '',
+        displayBtn: true,
+        displayTribes: false,
+        displayDwarfs: false,
       }
     },
 
@@ -39,7 +49,9 @@
     methods: {
       // Receive Data From Backend :
       fetchData() {
-        this.running = true;
+        this.$refs.vueLogo.className = "cool-logo";
+        this.displayBtn = false;
+        this.displayTribes = true;
         this.$http.get('https://localhost:5019/')
           .then(resp => resp.json()) // Make a JSON File from Server-Response.
           .then(data => data.forEach(dwarf => {
@@ -58,9 +70,11 @@
       },
 
       getDwarfs(event) {
-        const tribeName = event.target.parentElement.firstChild.textContent
-        const list = this.dwarfs.filter(dwarf => dwarf.tribe.name === tribeName);
-        console.log(list)
+        this.$refs.vueLogo.className = 'cool-logo-2';
+        this.displayTribes = false;
+        this.displayDwarfs = true;
+        this.tribeName = event.target.parentElement.firstChild.textContent;
+        this.dwarfsInTribe = this.dwarfs.filter(dwarf => dwarf.tribe.name === this.tribeName);
       }
     }
   }
@@ -84,16 +98,6 @@
     font-size: 1.2rem;
   }
 
-  ul {
-    list-style-type: none;
-    padding: 0;
-  }
-
-  li {
-    display: inline-block;
-    margin: 0 10px;
-  }
-
   button, a {
     padding: 12px 24px;
     border-radius: 5px;
@@ -105,6 +109,48 @@
   a:hover {
     color: white;
     text-decoration: none;
+  }
+
+  .animateit-enter {
+    opacity: 0;
+  }
+
+  .animateit-enter-active {
+    transition: opacity 0.7s;
+  }
+
+  .animateit-leave {
+  }
+
+  .animateit-leave-active {
+    transition: opacity 0.7s;
+    opacity: 0;
+  }
+
+  .cool-logo {
+    animation: cool-rotate 1.7s forwards;
+  }
+
+  .cool-logo-2 {
+    animation: cool-rotate-2 1.7s forwards;
+  }
+
+  @keyframes cool-rotate {
+    from {
+      transform: rotate3d(0);
+    }
+    to {
+      transform: rotate3d(0, 1, 0, 180deg);
+    }
+  }
+
+  @keyframes cool-rotate-2 {
+    from {
+      transform: rotate3d(0);
+    }
+    to {
+      transform: rotate3d(1, 0, 0, 180deg);
+    }
   }
 </style>
 

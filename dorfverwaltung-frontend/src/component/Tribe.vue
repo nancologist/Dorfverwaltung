@@ -14,11 +14,11 @@
     props: ['tribeList'],
     methods: {
       onClick(event) {
-        if (!event.target.parentElement.nextElementSibling) {
-          event.target.parentElement.previousElementSibling.style.opacity = 0.5;
-        } else {
-          event.target.parentElement.nextElementSibling.style.opacity = 0.5;
-        }
+        // if (!event.target.parentElement.nextElementSibling) {
+        //   event.target.parentElement.previousElementSibling.style.opacity = 0.5;
+        // } else {
+        //   event.target.parentElement.nextElementSibling.style.opacity = 0.5;
+        // }
         this.$emit("showDwarfs", event)
       }
     }
@@ -36,7 +36,7 @@
     border-radius: 5px;
     height: 16rem;
     width: 12rem;
-    padding-top: 2rem;
+    padding-top: 1rem;
     margin: 0 1rem;
   }
 </style>
