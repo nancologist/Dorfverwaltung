@@ -6,7 +6,7 @@
       <div></div>
       <transition name="animateit" mode="out-in">
         <!-- Tribe Cards -->
-        <button v-on:click="fetchData" v-if="displayBtn">Show Tribes</button>
+        <button v-on:click="fetchData" v-if="displayBtn">Stämme</button>
         <app-tribe
           v-if="displayTribes"
           v-bind:tribeList="tribes"
