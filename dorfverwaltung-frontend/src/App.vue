@@ -82,6 +82,7 @@
         this.displayBtn = false;
         this.displayDwarfs = false;
         this.displayTribes = true;
+        this.$refs.vueLogo.className = 'cool-logo-back';
       }
     }
   }
@@ -142,6 +143,10 @@
     animation: cool-rotate-2 1.7s forwards;
   }
 
+  .cool-logo-back {
+    animation: cool-rotate-back 1.7s forwards;
+  }
+
   @keyframes cool-rotate {
     from {
       transform: rotate3d(0);
@@ -157,6 +162,15 @@
     }
     to {
       transform: rotate3d(1, 0, 0, 180deg);
+    }
+  }
+
+  @keyframes cool-rotate-back {
+    from {
+      transform: rotate3d(1, 0, 0, 180deg);
+    }
+    to {
+      transform: rotate3d(0, 1, 0, 0deg);
     }
   }
 </style>

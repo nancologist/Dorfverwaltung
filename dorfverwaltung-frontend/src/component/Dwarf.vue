@@ -10,7 +10,7 @@
           <li><strong>Alter:</strong> {{ dwarf.age }}</li>
           <li><strong>Waffen:</strong>
             <ul v-for="weapon in dwarf.weapons">
-              <span>{{ weapon.name }} MV: {{ weapon.magicValue }}</span>
+              <span>Name: {{ weapon.name }} | Magischer Wert: {{ weapon.magicValue }}</span>
             </ul>
           </li>
         </ul>
