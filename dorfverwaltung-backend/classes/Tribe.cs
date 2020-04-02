@@ -16,7 +16,7 @@ namespace dorfverwaltung_backend
         public Tribe(string name, int since)
         {
             this.Name = name;
-            this.Since = since;
+            this.Since = since; // Jahre nach nkd
         }
 
         public string Name { get; set; }

@@ -12,6 +12,7 @@ namespace dorfverwaltung_backend.Controllers
     public class Controller : ControllerBase
     {
 
+        // Response JSON data on https://localhost:5019 
         [HttpGet]
         public List<Dwarf> Get()
         {

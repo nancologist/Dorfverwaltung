@@ -32,6 +32,7 @@ namespace dorfverwaltung_backend
             options.AddPolicy(MyAllowSpecificOrigins,
             builder =>
             {
+                // ALLOW CORS FOR VUE-JS ON PORT 8080 :
                 builder.WithOrigins("http://localhost:8080");
             });
         });

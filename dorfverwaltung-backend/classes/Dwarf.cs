@@ -6,8 +6,10 @@ namespace dorfverwaltung_backend
 {
     public class Dwarf
     {
+        // Fake Database
         public static List<Dwarf> DwarfDB = new List<Dwarf>();
 
+        // Initialisiere die beispielhaften Daten von der Aufgabe 
         static Dwarf() 
         {
             DwarfDB.Add(new Dwarf("Gimli", 140, new List<Weapon>(){ new Weapon("Axt", 12), new Weapon ("Schwert", 15) }, Tribe.TribeDB[0]));
@@ -21,6 +23,7 @@ namespace dorfverwaltung_backend
             this.Age = age;
             this.Weapons = weapon;
             this.Tribe = tribe;
+            // Calculate the PowerFactor from the Magic Values of the Weapons of Dwarf:
             this.PowerFactor = weapon.Select(item => item.MagicValue).Sum();
         }
 
