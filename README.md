@@ -13,7 +13,7 @@ The backend server (.Net Core Web API) runs on https://localhost:5019 and the fr
 ### Classes
 The backend model classes are in the following directory:
 
-    ```dorfverwaltung-backend/Classes```
+    dorfverwaltung-backend/Classes
 
 * Dwarf.cs
 * Tribe.cs
