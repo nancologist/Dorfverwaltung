@@ -15,6 +15,6 @@ The backend model classes are in the following directory:
 
     ```dorfverwaltung-backend/Classes```
 
-    * Dwarf.cs
-    * Tribe.cs
-    * Weapon.cs
+* Dwarf.cs
+* Tribe.cs
+* Weapon.cs
