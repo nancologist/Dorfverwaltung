@@ -113,6 +113,7 @@
     background-color: #35495e;
     color: #fff;
     outline: none;
+    cursor: pointer;
   }
 
   a:hover {
