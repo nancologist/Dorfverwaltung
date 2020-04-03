@@ -14,11 +14,6 @@
     props: ['tribeList'],
     methods: {
       onClick(event) {
-        // if (!event.target.parentElement.nextElementSibling) {
-        //   event.target.parentElement.previousElementSibling.style.opacity = 0.5;
-        // } else {
-        //   event.target.parentElement.nextElementSibling.style.opacity = 0.5;
-        // }
         this.$emit("showDwarfs", event)
       }
     }
