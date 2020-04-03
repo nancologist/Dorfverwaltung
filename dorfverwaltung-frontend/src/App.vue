@@ -2,11 +2,15 @@
   <transition name="animateit" appear>
     <div id="app" v-show="true">
       <h1>{{ title }}</h1>
-      <img ref="vueLogo" src="./assets/logo.png">
-      <div></div>
+      <img ref="vueLogo" alt="vue rules" src="./assets/logo.png">
       <transition name="animateit" mode="out-in">
-        <!-- Tribe Cards -->
-        <button v-on:click="fetchData" v-if="displayStartBtn">Stämme</button>
+        <app-start
+          v-if="displayStartBtn"
+          v-on:clicked="startApp"
+          v-bind:dwarfs="dwarfs"
+          v-bind:tribes="tribes"
+        />
+
         <app-tribe
           v-if="displayTribes"
           v-bind:tribeList="tribes"
@@ -25,6 +29,7 @@
 </template>
 
 <script>
+  import Start from './component/Start.vue';
   import Tribe from './component/Tribe.vue';
   import Dwarf from './component/Dwarf.vue';
 
@@ -46,28 +51,14 @@
     components: {
       appTribe: Tribe,
       appDwarf: Dwarf,
+      appStart: Start,
     },
 
     methods: {
-      // Receive Data From Backend :
-      fetchData() {
+      startApp() {
         this.$refs.vueLogo.className = "cool-logo";
         this.displayStartBtn = false;
         this.displayTribes = true;
-        this.$http.get('https://localhost:5019/api/dwarfs')
-          .then(resp => resp.json()) // Make a JSON File from Server-Response.
-          .then(data => data.forEach(dwarf => {
-            this.dwarfs.push(dwarf); // Add received data to dwarfs-array
-            let alreadyStoredTribe = this.tribes.find(tribe => tribe.name === dwarf['tribe']['name']);
-            // If the tribe is not already stored, store it into the tibes-array :
-            if (!alreadyStoredTribe) {
-              this.tribes.push({...dwarf['tribe'], tax: +calculateTax(dwarf['weapons']) })
-            } else {
-              // If the tribe is already stored just increment the tax by dwarf's powerFactor times 2125 :
-              alreadyStoredTribe.tax += +calculateTax(dwarf['weapons']);
-            }
-          }))
-          .catch(e => console.log(e));
       },
 
       getDwarfs(event) {
@@ -91,11 +82,6 @@
       }
     }
   }
-
-  const calculateTax = weapons => {
-    const reducer = (accumulator, currentValue) => accumulator + currentValue;
-    return (weapons.map(weapon => weapon.magicValue).reduce(reducer)) * 2125
-  };
 </script>
 
 <style>
