@@ -4,6 +4,8 @@
       <h1>{{ title }}</h1>
       <img ref="vueLogo" alt="vue rules" src="./assets/logo.png">
       <transition name="animateit" mode="out-in">
+
+        <!-- In der Start.vue Komponente werden die Daten vom Backend geholt -->
         <app-start
           v-if="displayStartBtn"
           v-on:clicked="startApp"
@@ -11,11 +13,14 @@
           v-bind:tribes="tribes"
         />
 
+        <!-- In dieser Komponente werden die Stämme aufgelistet -->
         <app-tribe
           v-if="displayTribes"
           v-bind:tribeList="tribes"
           v-on:showDwarfs="getDwarfs"
         />
+
+        <!-- In der Folgende Komponente werden die Zwerge kategorisiert nach dem Stamm aufgelistet -->
         <app-dwarf
           v-if="displayDwarfs"
           v-bind:tribeName="tribeName"
