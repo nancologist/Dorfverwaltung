@@ -4,6 +4,8 @@ namespace dorfverwaltung_backend
 {
     public class Weapon
     {
+        public Weapon() {}
+
         public Weapon(string name, int magicValue)
         {
             this.Name = name;

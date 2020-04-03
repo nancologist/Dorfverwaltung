@@ -53,7 +53,7 @@
         this.$refs.vueLogo.className = "cool-logo";
         this.displayBtn = false;
         this.displayTribes = true;
-        this.$http.get('https://localhost:5019/')
+        this.$http.get('https://localhost:5019/api/dwarfs')
           .then(resp => resp.json()) // Make a JSON File from Server-Response.
           .then(data => data.forEach(dwarf => {
             this.dwarfs.push(dwarf); // Add received data to dwarfs-array

@@ -17,6 +17,8 @@ namespace dorfverwaltung_backend
             DwarfDB.Add(new Dwarf("Gumli", 163, new List<Weapon>(){ new Weapon("Axt", 17) }, Tribe.TribeDB[1]));
         }
 
+        public Dwarf() {}
+
         public Dwarf(string Name, int age, List<Weapon> weapon, Tribe tribe) 
         {
             this.Name = Name;

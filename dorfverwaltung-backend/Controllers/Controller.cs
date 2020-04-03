@@ -8,15 +8,25 @@ using Microsoft.Extensions.Logging;
 namespace dorfverwaltung_backend.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/")]
     public class Controller : ControllerBase
     {
 
         // Response JSON data on https://localhost:5019 
-        [HttpGet]
+        [HttpGet("dwarfs/")]
         public List<Dwarf> Get()
         {
             return Dwarf.DwarfDB;
+        }
+        
+        [HttpPost]
+        public string Post(Dwarf dwarf)
+        {
+            // Remove the Dwarf
+            Dwarf.DwarfDB = Dwarf.DwarfDB.Where(item => item.Name != dwarf.Name).ToList();
+            // Add the dwarf with new Weapons:
+            Dwarf.DwarfDB.Add(dwarf);
+            return "successfully added";
         }
     }
 }

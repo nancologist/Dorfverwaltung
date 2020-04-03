@@ -7,6 +7,8 @@ namespace dorfverwaltung_backend
     {
         public static List<Tribe> TribeDB = new List<Tribe>();
 
+        public Tribe() {}
+
         static Tribe()
         {
             TribeDB.Add(new Tribe("Altobarden", 1247));

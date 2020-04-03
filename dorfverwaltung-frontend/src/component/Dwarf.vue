@@ -1,10 +1,10 @@
 <template>
   <div>
     <h2>Stamm: {{ tribeName }}</h2>
-    <div class="card" style="width: 18rem;" v-for="dwarf in dwarfs">
+    <div class="card" style="width: 18rem;" v-for="(dwarf, index) in dwarfs">
 <!--      <img class="card-img-top" src="" alt="Card image cap">-->
       <div class="card-body">
-        <h3 class="card-title">{{ dwarf.name }}</h3>
+        <h3 class="card-title" ref="dwarfName">{{ dwarf.name }}</h3>
         <hr>
         <ul class="dwarf-details">
           <li><strong>Alter:</strong> {{ dwarf.age }}</li>
@@ -14,7 +14,7 @@
             </ul>
           </li>
         </ul>
-        <button>Neue Waffe</button>
+        <button @click="addWeapon(dwarf)">Neue Waffe</button>
       </div>
     </div>
     <button id="backBtn" @click="onClick">Zurück</button>
@@ -27,9 +27,43 @@
     methods: {
       onClick() {
         this.$emit('backBtn')
+      },
+      addWeapon(dwarf) {
+
+        dwarf['weapons'] = [
+          {
+            "name": "Säge",
+            "magicValue": 65
+          },
+        ];
+
+        this.$http.post("https://localhost:5019/api", dwarf)
+          .then(data => data.text())
+          .then(text => console.log(text))
+          .catch(err => console.log(err));
       }
     }
   }
+
+  // {
+  //   "name": "Gimli",
+  //   "age": 140,
+  //   "weapons": [
+  //   {
+  //     "name": "Axt",
+  //     "magicValue": 12
+  //   },
+  //   {
+  //     "name": "Schwert",
+  //     "magicValue": 15
+  //   }
+  // ],
+  //   "powerFactor": 27,
+  //   "tribe": {
+  //   "name": "Altobarden",
+  //     "since": 1247
+  // }
+  // },
 </script>
 
 <style scoped>
