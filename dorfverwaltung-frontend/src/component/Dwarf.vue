@@ -32,23 +32,22 @@
         this.$emit('backBtn')
       },
       addWeapon(dwarf) {
-        console.log(dwarf['weapons']);
         let newData = {...dwarf};
 
         newData['weapons'] = [
           ...dwarf['weapons'],
           {
-            "name": "Säge",
+            "name": "Pistole",
             "magicValue": 65
           },
         ];
-
-        console.log(newData['weapons']);
 
         this.$http.post("https://localhost:5019/api", newData)
           .then(data => data.text())
           .then(text => console.log(text))
           .catch(err => console.log(err));
+
+        this.$emit('weaponAdded');
       }
     },
   }

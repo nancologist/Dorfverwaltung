@@ -6,7 +6,7 @@
       <div></div>
       <transition name="animateit" mode="out-in">
         <!-- Tribe Cards -->
-        <button v-on:click="fetchData" v-if="displayBtn">Stämme</button>
+        <button v-on:click="fetchData" v-if="displayStartBtn">Stämme</button>
         <app-tribe
           v-if="displayTribes"
           v-bind:tribeList="tribes"
@@ -17,6 +17,7 @@
           v-bind:tribeName="tribeName"
           v-bind:dwarfs="dwarfsInTribe"
           v-on:backBtn="goToTribes"
+          v-on:weaponAdded="reloadApp"
         />
       </transition>
     </div>
@@ -36,7 +37,7 @@
         tribes: [],
         dwarfsInTribe: [],
         tribeName: '',
-        displayBtn: true,
+        displayStartBtn: true,
         displayTribes: false,
         displayDwarfs: false,
       }
@@ -50,8 +51,10 @@
     methods: {
       // Receive Data From Backend :
       fetchData() {
+        this.dwarfs = [];
+        this.tribes = [];
         this.$refs.vueLogo.className = "cool-logo";
-        this.displayBtn = false;
+        this.displayStartBtn = false;
         this.displayTribes = true;
         this.$http.get('https://localhost:5019/api/dwarfs')
           .then(resp => resp.json()) // Make a JSON File from Server-Response.
@@ -80,10 +83,18 @@
       },
 
       goToTribes() {
-        this.displayBtn = false;
+        this.displayStartBtn = false;
         this.displayDwarfs = false;
         this.displayTribes = true;
         this.$refs.vueLogo.className = 'cool-logo-back';
+      },
+
+      reloadApp() {
+        this.displayDwarfs = false;
+        this.displayTribes = false;
+        this.displayStartBtn = true;
+        this.fetchData();
+        alert('Waffe erfolgreich hinzugefügt');
       }
     }
   }
