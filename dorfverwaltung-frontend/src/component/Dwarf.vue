@@ -3,16 +3,6 @@
     <h2>Stamm: {{ tribeName }}</h2>
     <div class="card-container">
       <div class="card" style="width: 18rem;" v-for="dwarf in dwarfs" :key="dwarf.name">
-
-        <!--   TEST     -->
-        <p>{{dwarf}}</p>
-
-        <app-modal
-          :showModal="showModal"
-          :targetDwarf="dwarf"
-          @close="showModal = false"
-          @weaponAdded="notifyApp"
-        />
         <!--      <img class="card-img-top" src="" alt="Card image cap">-->
         <div class="card-body">
           <h3 class="card-title" ref="dwarfName">{{ dwarf.name }}</h3>
@@ -26,9 +16,15 @@
             </li>
             <li><strong>Powerfactor:</strong> {{ dwarf.weapons.map(weapon => weapon.magicValue).reduce((accumulator, currentValue) => accumulator + currentValue) }}</li>
           </ul>
-          <button class="card-button" @click="showModal = true"><span class="plus-sign">&#43;</span> Waffe</button>
+          <button class="card-button" @click="setModalDwarf(dwarf)"><span class="plus-sign">&#43;</span> Waffe</button>
         </div>
       </div>
+      <app-modal
+        :showModal="showModal"
+        :targetDwarf="currentDwarf"
+        @close="showModal = false"
+        @weaponAdded="notifyApp"
+      />
     </div>
     <button id="backBtn" @click="onClick">Zurück</button>
   </div>
@@ -40,11 +36,17 @@
     data() {
       return {
         showModal: false,
+        currentDwarf: null,
       }
     },
     components: { appModal : Modal },
     props: ['tribeName', 'dwarfs'],
     methods: {
+      setModalDwarf(dwarf) {
+        this.currentDwarf = dwarf;
+        this.showModal = true;
+      },
+
       onClick() {
         this.$emit('backBtn')
       },

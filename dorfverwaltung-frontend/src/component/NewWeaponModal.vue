@@ -4,11 +4,6 @@
       <div class="modal-content">
         <span @click="$emit('close')" class="close">&times;</span>
         <h3>Neue Waffe</h3>
-
-        <!--    TEST    -->
-        <p>{{ targetDwarf }}</p>
-
-
         <form>
           <input
             type="text"
@@ -44,9 +39,9 @@
       onClick() {
         if(this.weaponName !== '' &&
           Number.isInteger(+this.magicValue)) {
-          let newData = {...this.dwarf};
+          let newData = {...this.targetDwarf};
           newData['weapons'] = [
-            ...this.dwarf['weapons'],
+            ...this.targetDwarf['weapons'],
             {
               "name": this.weaponName,
               "magicValue": Number.parseInt(this.magicValue)
