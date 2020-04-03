@@ -14,6 +14,7 @@
                 <li><span>Name: {{ weapon.name }} | Magischer Wert: {{ weapon.magicValue }}</span></li>
               </ul>
             </li>
+            <li><strong>Powerfactor:</strong> {{ dwarf.weapons.map(weapon => weapon.magicValue).reduce((accumulator, currentValue) => accumulator + currentValue) }}</li>
           </ul>
           <button @click="addWeapon(dwarf)">Neue Waffe</button>
         </div>
@@ -31,20 +32,25 @@
         this.$emit('backBtn')
       },
       addWeapon(dwarf) {
+        console.log(dwarf['weapons']);
+        let newData = {...dwarf};
 
-        dwarf['weapons'] = [
+        newData['weapons'] = [
+          ...dwarf['weapons'],
           {
             "name": "Säge",
             "magicValue": 65
           },
         ];
 
-        this.$http.post("https://localhost:5019/api", dwarf)
+        console.log(newData['weapons']);
+
+        this.$http.post("https://localhost:5019/api", newData)
           .then(data => data.text())
           .then(text => console.log(text))
           .catch(err => console.log(err));
       }
-    }
+    },
   }
 </script>
 

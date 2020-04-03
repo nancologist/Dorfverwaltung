@@ -56,15 +56,16 @@
         this.$http.get('https://localhost:5019/api/dwarfs')
           .then(resp => resp.json()) // Make a JSON File from Server-Response.
           .then(data => data.forEach(dwarf => {
-            this.dwarfs.push(dwarf); // Add received data to dwarfs-array
+            const reducer = (accumulator, currentValue) => accumulator + currentValue;
 
+            this.dwarfs.push(dwarf); // Add received data to dwarfs-array
             let alreadyStoredTribe = this.tribes.find(tribe => tribe.name === dwarf['tribe']['name']);
             // If the tribe is not already stored, store it into the tibes-array :
             if (!alreadyStoredTribe) {
-              this.tribes.push({...dwarf['tribe'], tax: +dwarf['powerFactor'] * 2125})
+              this.tribes.push({...dwarf['tribe'], tax: +(dwarf['weapons'].map(weapon => weapon.magicValue).reduce(reducer))*2125 })
             } else {
               // If the tribe is already stored just increment the tax by dwarf's powerFactor times 2125 :
-              alreadyStoredTribe.tax += +dwarf['powerFactor'] * 2125
+              alreadyStoredTribe.tax += +(dwarf['weapons'].map(weapon => weapon.magicValue).reduce(reducer))*2125
             }
           }))
           .catch(e => console.log(e));
