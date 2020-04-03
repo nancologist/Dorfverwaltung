@@ -51,16 +51,12 @@
     methods: {
       // Receive Data From Backend :
       fetchData() {
-        this.dwarfs = [];
-        this.tribes = [];
         this.$refs.vueLogo.className = "cool-logo";
         this.displayStartBtn = false;
         this.displayTribes = true;
         this.$http.get('https://localhost:5019/api/dwarfs')
           .then(resp => resp.json()) // Make a JSON File from Server-Response.
           .then(data => data.forEach(dwarf => {
-            // const reducer = (accumulator, currentValue) => accumulator + currentValue;
-
             this.dwarfs.push(dwarf); // Add received data to dwarfs-array
             let alreadyStoredTribe = this.tribes.find(tribe => tribe.name === dwarf['tribe']['name']);
             // If the tribe is not already stored, store it into the tibes-array :
